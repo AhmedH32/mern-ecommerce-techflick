@@ -1,0 +1,200 @@
+{
+  "laptops": [
+    {
+      "id": 1,
+      "name": "Dell XPS 13 9310",
+      "brand": "Dell",
+      "model": "XPS 13",
+      "price": 29999,
+      "currency": "EGP",
+      "rating": 4.5,
+      "reviews": 1000,
+      "image": "images/laptops/dell-xps-13.jpg",
+      "specifications": {
+        "processor": "Intel Core i7-1165G7",
+        "ram": "16GB LPDDR4x",
+        "storage": "512GB SSD",
+        "screen_size": "13.4 in",
+        "resolution": "1920 x 1200"
+      }
+    }
+  ],
+  "smartphones": [
+    {
+      "id": 1,
+      "name": "Galaxy S23 Ultra 5G Dual Sim Sky Blue 12GB RAM 256GB - International Version",
+      "brand": "Samsung",
+      "model": "Galaxy S23 Ultra",
+      "price": 53000,
+      "currency": "EGP",
+      "rating": 4.3,
+      "reviews": 11,
+      "image": "images/smartphones/galaxy-s23-ultra.jpeg",
+      "specifications": {
+        "ram": "12GB",
+        "internal_memory": "256GB",
+        "battery": "5000 mAh",
+        "screen_size": "6.8 in",
+        "primary_camera": "200+10+10+12 MP",
+        "secondary_camera": "12 MP",
+        "charging_type": "Type-C",
+        "sim_count": "Dual SIM",
+        "operating_system": "Android 13",
+        "network_type": "5G",
+        "model_year": 2023
+      }
+    }
+  ],
+  "gaming_consoles": [
+    {
+      "id": 1,
+      "name": "PlayStation 5 Console",
+      "brand": "Sony",
+      "model": "PlayStation 5",
+      "price": 19999,
+      "currency": "EGP",
+      "rating": 4.8,
+      "reviews": 2000,
+      "image": "images/gaming-consoles/ps5.jpeg",
+      "specifications": {
+        "processor": "AMD Ryzen Zen 2",
+        "graphics": "AMD RDNA 2",
+        "storage": "825GB SSD",
+        "ram": "16GB GDDR6",
+        "resolution": "4K UHD"
+      }
+    }
+  ],
+  "smart_watches": [
+    {
+      "id": 1,
+      "name": "Apple Watch Series 8 GPS 41mm Starlight Aluminum Case with Starlight Sport Band",
+      "brand": "Apple",
+      "model": "Watch Series 8",
+      "price": 9999,
+      "currency": "EGP",
+      "rating": 4.5,
+      "reviews": 500,
+      "image": "images/smart-watches/apple-watch-series-8.jpeg",
+      "specifications": {
+        "display_size": "1.9 in",
+        "battery_life": "18 hours",
+        "water_resistance": "50 meters",
+        "connectivity": "Wi-Fi, Bluetooth",
+        "features": ["Heart Rate Monitor", "GPS", "ECG"]
+      }
+    }
+  ],
+  "accessories": [
+    {
+      "id": 1,
+      "name": "Logitech MX Master 3S Wireless Mouse",
+      "brand": "Logitech",
+      "model": "MX Master 3S",
+      "price": 1999,
+      "currency": "EGP",
+      "rating": 4.7,
+      "reviews": 1500,
+      "image": "images/accessories/logitech-mx-master-3s.jpeg",
+      "specifications": {
+        "connectivity": "Bluetooth, USB Receiver",
+        "battery_life": "70 days",
+        "dpi": "200 - 4000",
+        "features": ["Customizable Buttons", "Fast Scrolling"]
+      }
+    }
+  ],
+  "featured_products": [
+    {
+      "id": 1,
+      "name": "Dell XPS 13 9310",
+      "category": "laptops",
+      "price": 29999,
+      "currency": "EGP",
+      "rating": 4.5,
+      "reviews": 1000,
+      "image": "images/laptops/dell-xps-13.jpg",
+      "specifications": {
+        "processor": "Intel Core i7-1165G7",
+        "ram": "16GB LPDDR4x",
+        "storage": "512GB SSD",
+        "screen_size": "13.4 in",
+        "resolution": "1920 x 1200"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Galaxy S23 Ultra 5G Dual Sim Sky Blue 12GB RAM 256GB - International Version",
+      "category": "smartphones",
+      "price": 53000,
+      "currency": "EGP",
+      "rating": 4.3,
+      "reviews": 11,
+      "image": "images/smart-phones/galaxy-s23-ultra.jpeg",
+      "specifications": {
+        "ram": "12GB",
+        "internal_memory": "256GB",
+        "battery": "5000 mAh",
+        "screen_size": "6.8 in",
+        "primary_camera": "200+10+10+12 MP",
+        "secondary_camera": "12 MP",
+        "charging_type": "Type-C",
+        "sim_count": "Dual SIM",
+        "operating_system": "Android 13",
+        "network_type": "5G",
+        "model_year": 2023
+      }
+    },
+    {
+      "id": 3,
+      "name": "PlayStation 5 Console",
+      "category": "gaming_consoles",
+      "price": 19999,
+      "currency": "EGP",
+      "rating": 4.8,
+      "reviews": 2000,
+      "image": "images/gaming-consoles/ps5.jpeg",
+      "specifications": {
+        "processor": "AMD Ryzen Zen 2",
+        "graphics": "AMD RDNA 2",
+        "storage": "825GB SSD",
+        "ram": "16GB GDDR6",
+        "resolution": "4K UHD"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Apple Watch Series 8 GPS 41mm Starlight Aluminum Case with Starlight Sport Band",
+      "category": "smart_watches",
+      "price": 9999,
+      "currency": "EGP",
+      "rating": 4.5,
+      "reviews": 500,
+      "image": "images/smart-watches/apple-watch-series-8.jpeg",
+      "specifications": {
+        "display_size": "1.9 in",
+        "battery_life": "18 hours",
+        "water_resistance": "50 meters",
+        "connectivity": "Wi-Fi, Bluetooth",
+        "features": ["Heart Rate Monitor", "GPS", "ECG"]
+      }
+    },
+    {
+      "id": 5,
+      "name": "Logitech MX Master 3S Wireless Mouse",
+      "category": "accessories",
+      "price": 1999,
+      "currency": "EGP",
+      "rating": 4.7,
+      "reviews": 1500,
+      "image": "images/accessories/logitech-mx-master-3s.jpeg",
+      "specifications": {
+        "connectivity": "Bluetooth, USB Receiver",
+        "battery_life": "70 days",
+        "dpi": "200 - 4000",
+        "features": ["Customizable Buttons", "Fast Scrolling"]
+      }
+    }
+  ]
+
+}

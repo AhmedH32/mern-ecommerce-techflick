@@ -6,16 +6,14 @@ const Hero = () => {
     <section
       className="hero-section d-flex align-items-center"
       style={{
-        // gradient from navbar-light (#F8F9FA) → light-blue → logo-blue
         backgroundImage: 'linear-gradient(135deg, #F8F9FA 0%, #E3F2FD 50%, #0D6EFD 100%)',
-        minHeight: '60vh',
       }}
     >
-      <Container>
+      <Container className="py-5">
         <Row className="align-items-center">
-          {/* Text column */}
-          <Col xs={12} md={6} className="py-5 text-dark">
-            <h1 className="display-4 fw-bold">
+          
+          <Col xs={12} md={6} className="text-dark">
+            <h1 className="display-4 fw-bold mb-3">
               Flick Into the Future of Tech
             </h1>
             <p className="lead mb-4">
@@ -33,13 +31,13 @@ const Hero = () => {
             </Button>
           </Col>
 
-          {/* Illustration column (optional) */}
-          <Col xs={12} md={6} className="text-center">
+          
+          <Col xs={12} md={6} className="text-center d-none d-lg-block">
             <img
               src="/images/hero-gadget.png"
               alt="Featured gadget"
               className="img-fluid"
-              style={{ maxHeight: '300px' }}
+              style={{ maxHeight: '200px' }}
             />
           </Col>
         </Row>
