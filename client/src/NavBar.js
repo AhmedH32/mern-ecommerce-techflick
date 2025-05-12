@@ -11,7 +11,7 @@ const NavBar = ({ isSignedIn }) => {
     const [search, setSearch] = useState('');
 
     return (
-        <Navbar expand="md" bg="light" variant="whaite" className="py-2" >
+        <Navbar expand="md" bg="light" variant="whaite" className="py-2" sticky="top">
             <Container fluid>
                 <Navbar.Brand href="/">
                     <TechFlickLogo className="w-8 h-8" color="#0d6efd" /><span className='ms-2'>TechFlick</span>
