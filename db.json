@@ -19,7 +19,7 @@
       }
     }
   ],
-  "smartphones": [
+  "smart_phones": [
     {
       "id": 1,
       "name": "Galaxy S23 Ultra 5G Dual Sim Sky Blue 12GB RAM 256GB - International Version",
@@ -29,7 +29,7 @@
       "currency": "EGP",
       "rating": 4.3,
       "reviews": 11,
-      "image": "images/smart-phones/galaxy-s23-ultra.jpeg",
+      "image": "images/smart-phones/galaxy-s23-ultra.jpg",
       "specifications": {
         "ram": "12GB",
         "internal_memory": "256GB",
@@ -55,7 +55,7 @@
       "currency": "EGP",
       "rating": 4.8,
       "reviews": 2000,
-      "image": "images/gaming-consoles/ps5.jpeg",
+      "image": "images/gaming-consoles/ps5.jpg",
       "specifications": {
         "processor": "AMD Ryzen Zen 2",
         "graphics": "AMD RDNA 2",
@@ -75,13 +75,17 @@
       "currency": "EGP",
       "rating": 4.5,
       "reviews": 500,
-      "image": "images/smart-watches/apple-watch-series-8.jpeg",
+      "image": "images/smart-watches/apple-watch-series-8.jpg",
       "specifications": {
         "display_size": "1.9 in",
         "battery_life": "18 hours",
         "water_resistance": "50 meters",
         "connectivity": "Wi-Fi, Bluetooth",
-        "features": ["Heart Rate Monitor", "GPS", "ECG"]
+        "features": [
+          "Heart Rate Monitor",
+          "GPS",
+          "ECG"
+        ]
       }
     }
   ],
@@ -95,18 +99,22 @@
       "currency": "EGP",
       "rating": 4.7,
       "reviews": 1500,
-      "image": "images/accessories/logitech-mx-master-3s.jpeg",
+      "image": "images/accessories/logitech-mx-master-3s.jpg",
       "specifications": {
         "connectivity": "Bluetooth, USB Receiver",
         "battery_life": "70 days",
         "dpi": "200 - 4000",
-        "features": ["Customizable Buttons", "Fast Scrolling"]
+        "features": [
+          "Customizable Buttons",
+          "Fast Scrolling"
+        ]
       }
     }
   ],
   "featured_products": [
     {
       "id": 1,
+      "refId": 1,
       "name": "Dell XPS 13 9310",
       "category": "laptops",
       "price": 29999,
@@ -124,13 +132,14 @@
     },
     {
       "id": 2,
+      "refId": 1,
       "name": "Galaxy S23 Ultra 5G Dual Sim Sky Blue 12GB RAM 256GB - International Version",
-      "category": "smartphones",
+      "category": "smart_phones",
       "price": 53000,
       "currency": "EGP",
       "rating": 4.3,
       "reviews": 11,
-      "image": "images/smart-phones/galaxy-s23-ultra.jpeg",
+      "image": "images/smart-phones/galaxy-s23-ultra.jpg",
       "specifications": {
         "ram": "12GB",
         "internal_memory": "256GB",
@@ -147,13 +156,14 @@
     },
     {
       "id": 3,
+      "refId": 1,
       "name": "PlayStation 5 Console",
       "category": "gaming_consoles",
       "price": 19999,
       "currency": "EGP",
       "rating": 4.8,
       "reviews": 2000,
-      "image": "images/gaming-consoles/ps5.jpeg",
+      "image": "images/gaming-consoles/ps5.jpg",
       "specifications": {
         "processor": "AMD Ryzen Zen 2",
         "graphics": "AMD RDNA 2",
@@ -164,37 +174,84 @@
     },
     {
       "id": 4,
+      "refId": 1,
       "name": "Apple Watch Series 8 GPS 41mm Starlight Aluminum Case with Starlight Sport Band",
       "category": "smart_watches",
       "price": 9999,
       "currency": "EGP",
       "rating": 4.5,
       "reviews": 500,
-      "image": "images/smart-watches/apple-watch-series-8.jpeg",
+      "image": "images/smart-watches/apple-watch-series-8.jpg",
       "specifications": {
         "display_size": "1.9 in",
         "battery_life": "18 hours",
         "water_resistance": "50 meters",
         "connectivity": "Wi-Fi, Bluetooth",
-        "features": ["Heart Rate Monitor", "GPS", "ECG"]
+        "features": [
+          "Heart Rate Monitor",
+          "GPS",
+          "ECG"
+        ]
       }
     },
     {
       "id": 5,
+      "refId": 1,
       "name": "Logitech MX Master 3S Wireless Mouse",
       "category": "accessories",
       "price": 1999,
       "currency": "EGP",
       "rating": 4.7,
       "reviews": 1500,
-      "image": "images/accessories/logitech-mx-master-3s.jpeg",
+      "image": "images/accessories/logitech-mx-master-3s.jpg",
       "specifications": {
         "connectivity": "Bluetooth, USB Receiver",
         "battery_life": "70 days",
         "dpi": "200 - 4000",
-        "features": ["Customizable Buttons", "Fast Scrolling"]
+        "features": [
+          "Customizable Buttons",
+          "Fast Scrolling"
+        ]
       }
     }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "ahmed",
+      "password": "z0182930969",
+      "name": "Ahmed Hassan",
+      "email": "ahmed.h.moustafa2003@gmail.com"
+    },
+    {
+      "id": 2,
+      "username": "bob",
+      "password": "password123",
+      "name": "Bob Smith",
+      "email": "bob@example.com"
+    },
+    {
+      "username": "ahmed3233",
+      "password": "z0182930969",
+      "name": "test abo el testat",
+      "email": "fireb77277@gmail.com",
+      "id": 3
+    }
+  ],
+  "cart": [
+    {
+      "userId": 3,
+      "category": "laptops",
+      "productId": 1,
+      "quantity": 1,
+      "id": 1
+    },
+    {
+      "userId": 3,
+      "category": "accessories",
+      "productId": 1,
+      "quantity": 1,
+      "id": 2
+    }
   ]
-
 }

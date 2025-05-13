@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaLaptop, FaMobileAlt, FaHeadphones, FaGamepad, FaSwimmer } from "react-icons/fa";  // Importing React Icons
+import { FaLaptop, FaMobileAlt, FaHeadphones, FaGamepad, FaRegClock } from "react-icons/fa";  // Importing React Icons
 
 const ProductCategories = () => {
   return (
@@ -19,7 +19,7 @@ const ProductCategories = () => {
         
         {/* Category 2: Phones */}
         <div className="category-card">
-          <Link to="/category/smartphones">
+          <Link to="/category/smart_phones">
             <div className="category-icon">
               <FaMobileAlt size={50} />
             </div>
@@ -47,13 +47,12 @@ const ProductCategories = () => {
           </Link>
         </div>
 
-        {/* Category 5: Wearables */}
         <div className="category-card">
           <Link to="/category/smart_watches">
             <div className="category-icon">
-              <FaSwimmer size={50} />  {/* You can choose another icon if you prefer */}
+              <FaRegClock size={50} />
             </div>
-            <p className="category-name">Wearables</p>
+            <p className="category-name">Smart Watches</p>
           </Link>
         </div>
       </div>

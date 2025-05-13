@@ -1,10 +1,9 @@
 import { useParams, Link } from 'react-router-dom';
-import useFetch from './useFetch'; // Assuming useFetch is located here
+import useFetch from './useFetch'; 
 
 const CategoryPage = () => {
-  const { category } = useParams(); // Get the category from the URL
+  const { category } = useParams(); 
 
-  // Use the custom hook to fetch products based on the category
   const { data: products, loading, error } = useFetch(
     `http://localhost:8000/${category}`
   );
@@ -14,11 +13,11 @@ const CategoryPage = () => {
 
   return (
     <div className="category-page">
-      <h2>{category.charAt(0).toUpperCase() + category.slice(1)} Products</h2>
+      <h2>{formatKey(category)} Products</h2>
       <div className="category-page__products-list">
         {products.map((product) => (
           <div className="category-page__product-card" key={product.id}>
-            <Link to={`/product/${category}/${product.id}`} style={{ textDecoration: 'none' }}>
+            <Link to={`/product/${product.category}/${product.id}`} style={{ textDecoration: 'none' }}>
               <div className="card">
                 <img src={'/' + product.image} alt={product.name} />
                 <div className="product-details">
@@ -33,5 +32,9 @@ const CategoryPage = () => {
     </div>
   );
 };
-
+function formatKey(key) {
+  return key
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, char => char.toUpperCase());
+}
 export default CategoryPage;

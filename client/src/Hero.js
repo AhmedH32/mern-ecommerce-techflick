@@ -22,10 +22,7 @@ const Hero = () => {
             <Button
               href="/products"
               size="lg"
-              style={{
-                backgroundColor: '#0D6EFD',
-                border: 'none',
-              }}
+              className='button-hero'
             >
               Shop Now
             </Button>
