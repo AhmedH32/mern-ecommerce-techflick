@@ -4,15 +4,22 @@ import FeaturedProducts from './FeaturedProducts';
 import Hero from './Hero';
 import NavBar from './NavBar';
 import Home from './Home';
+import Footer from "./Footer";
+import CategoryPage from './CategoryPage';
 function App() {
-   return (
+  return (
     <div className="App">
+
       <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Home></Home>} />
-           </Routes>
+        <NavBar></NavBar>
+
+        <Routes>
+          <Route path='/' element={<Home></Home>} />
+          <Route path='/category/:category' element={<CategoryPage></CategoryPage>}></Route>
+        </Routes>
+        <Footer></Footer>
+
       </BrowserRouter>
-      
     </div>
   );
 }

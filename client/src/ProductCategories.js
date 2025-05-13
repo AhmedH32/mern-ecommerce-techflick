@@ -5,7 +5,7 @@ import { FaLaptop, FaMobileAlt, FaHeadphones, FaGamepad, FaSwimmer } from "react
 const ProductCategories = () => {
   return (
     <div className="categories-container">
-      <h2 className="section-title">Shop by Category</h2>
+      <h2 className="home-title">Shop by Category</h2>
       <div className="categories">
         {/* Category 1: Laptops */}
         <div className="category-card">
@@ -19,7 +19,7 @@ const ProductCategories = () => {
         
         {/* Category 2: Phones */}
         <div className="category-card">
-          <Link to="/category/phones">
+          <Link to="/category/smartphones">
             <div className="category-icon">
               <FaMobileAlt size={50} />
             </div>
@@ -39,7 +39,7 @@ const ProductCategories = () => {
 
         {/* Category 4: Gaming */}
         <div className="category-card">
-          <Link to="/category/gaming">
+          <Link to="/category/gaming_consoles">
             <div className="category-icon">
               <FaGamepad size={50} />
             </div>
@@ -49,7 +49,7 @@ const ProductCategories = () => {
 
         {/* Category 5: Wearables */}
         <div className="category-card">
-          <Link to="/category/wearables">
+          <Link to="/category/smart_watches">
             <div className="category-icon">
               <FaSwimmer size={50} />  {/* You can choose another icon if you prefer */}
             </div>

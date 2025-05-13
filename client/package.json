@@ -40,5 +40,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "postcss-merge-rules": "^7.0.5",
+    "stylelint-config-standard": "^38.0.0"
   }
 }
