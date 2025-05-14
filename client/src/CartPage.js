@@ -13,7 +13,6 @@ const CartPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Fetch product details for each cart entry
   useEffect(() => {
     if (!user) {
       navigate('/signin', { state: { from: '/cart' } });
@@ -53,7 +52,6 @@ const CartPage = () => {
   if (detailedItems.length === 0)
     return <p className="m-5 text-center">Your cart is empty.</p>;
 
-  // Compute grand total
   const grandTotal = detailedItems.reduce(
     (sum, { product, quantity }) => sum + product.price * quantity,
     0
