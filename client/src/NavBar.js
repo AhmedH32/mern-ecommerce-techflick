@@ -1,58 +1,92 @@
+import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import TechFlickLogo from './TechFlickLogo';
+import { useAuth } from './context/AuthContext';
 
-const NavBar = ({ isSignedIn }) => {
-    const [search, setSearch] = useState('');
+export default function NavBar() {
+  const [search, setSearch] = useState('');
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
-    return (
-        <Navbar expand="md" bg="light" variant="whaite" className="py-2" >
-            <Container fluid>
-                <Navbar.Brand href="/">
-                    <TechFlickLogo className="w-8 h-8" color="#0d6efd" /><span className='ms-2'>TechFlick</span>
-                </Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
-                    {/* Center Search */}
-                    <Form className="d-flex mx-auto w-50">
-                        <Form.Control
-                            type="search"
-                            placeholder="Search for your product!"
-                            className="me-2"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
-                        <Button variant="outline-success">Search</Button>
-                    </Form>
+  const handleSignIn = () => {
+    navigate('/signin');
+  };
 
-                    {/* Right side links */}
-                    <Nav className="ms-auto">
-                        <NavDropdown
-                            title="Products"
-                            id="products-nav-dropdown"
-                            className="mx-auto mx-md-0"
-                        >
-                            <NavDropdown.Item href="#">Laptops <i className="bi bi-laptop"></i></NavDropdown.Item>
-                            <NavDropdown.Item href="#">Smartphones <i className="bi bi-phone"></i></NavDropdown.Item>
-                            <NavDropdown.Item href="#">Wearables <i className="bi bi-smartwatch"></i></NavDropdown.Item>
-                            <NavDropdown.Item href="#">Accessories <i className="bi bi-earbuds"></i></NavDropdown.Item>
-                            <NavDropdown.Item href="#">Gaming <i className="bi bi-controller"></i></NavDropdown.Item>
-                        </NavDropdown>
-                        <Nav.Link href="#">Offers</Nav.Link>
-                        {isSignedIn && <Nav.Link href="#">My Cart<i class="bi bi-cart"></i></Nav.Link>}
-                        {!isSignedIn && <Nav.Link href="#">Sign In</Nav.Link>}
-                        {isSignedIn && <Nav.Link href="#">Sign Out</Nav.Link>}
-                    </Nav>
-                </Navbar.Collapse>
-            </Container>
-        </Navbar>
-    );
-};
+  return (
+    <Navbar expand="lg" bg="light" variant="light" className="py-2">
+      <Container fluid>
+        <Navbar.Brand as={Link} to="/" style={{ zIndex: '2' }}>
+          <TechFlickLogo className="w-8 h-8" color="#0d6efd" />
+          <span className="ms-2">TechFlick</span>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
 
-export default NavBar;
+          {/* Center Search */}
+          <Form className="d-flex mx-auto w-50">
+            <Form.Control
+              type="search"
+              placeholder="Search for your product!"
+              className="me-2"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <Button variant="outline-success">Search</Button>
+          </Form>
+
+          <Nav className="ms-auto">
+            <NavDropdown
+              title="Products"
+              id="products-nav-dropdown"
+              className="mx-auto mx-md-0"
+            >
+              <NavDropdown.Item as={Link} to="/category/laptops">
+                Laptops
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/category/smartphones">
+                Smartphones
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/category/smart_watches">
+                Smart Watches
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/category/accessories">
+                Accessories
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/category/gaming_consoles">
+                Gaming
+              </NavDropdown.Item>
+            </NavDropdown>
+
+            <Nav.Link as={Link} to="/offers">Offers</Nav.Link>
+
+            {user ? (
+              <>
+                <Nav.Link as={Link} to="/cart">
+                  My Cart
+                </Nav.Link>
+                <Nav.Link onClick={handleLogout} style={{ cursor: 'pointer' }}>
+                  Sign Out
+                </Nav.Link>
+              </>
+            ) : (
+              <Nav.Link onClick={handleSignIn} style={{ cursor: 'pointer' }}>
+                Sign In
+              </Nav.Link>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+}
