@@ -238,20 +238,5 @@
       "id": 3
     }
   ],
-  "cart": [
-    {
-      "userId": 3,
-      "category": "laptops",
-      "productId": 1,
-      "quantity": 1,
-      "id": 1
-    },
-    {
-      "userId": 3,
-      "category": "accessories",
-      "productId": 1,
-      "quantity": 1,
-      "id": 2
-    }
-  ]
+  "cart": []
 }

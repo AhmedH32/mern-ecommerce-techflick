@@ -19,17 +19,25 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch('http://localhost:8000/users', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password, name, email })
-    });
-    if (res.ok) {
-      setToastMsg('Account created successfully!');
-      setShowToast(true);
-      setTimeout(() => navigate('/signin', { state: { from } }), 800);
-    } else {
-      setToastMsg('Sign up failed');
+    try {
+      const res = await fetch('http://localhost:5000/api/signup', { // Changed URL
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password, name, email })
+      });
+
+      if (res.ok) { // Check if response status is 2xx
+        setToastMsg('Account created successfully!');
+        setShowToast(true);
+        setTimeout(() => navigate('/signin', { state: { from } }), 800);
+      } else {
+        const errorData = await res.json(); // Read error message from backend
+        setToastMsg(errorData.message || 'Sign up failed');
+        setShowToast(true);
+      }
+    } catch (error) {
+      console.error('Sign up API call error:', error);
+      setToastMsg('Network error or server unavailable');
       setShowToast(true);
     }
   };
