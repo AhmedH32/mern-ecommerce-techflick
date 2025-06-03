@@ -6,13 +6,13 @@ require('dotenv').config();
 
 const User = require('./models/User');
 const Product = require('./models/Product');
-const CartItem = require('./models/CartItem'); // Ensure this model is defined
+const CartItem = require('./models/CartItem');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
-app.use(express.json()); // This middleware is crucial for req.body to be parsed
+app.use(express.json());
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -24,6 +24,31 @@ app.get('/', (req, res) => {
   res.send('TechFlick API is running!');
 });
 
+// --- PRODUCT ROUTES ---
+
+// 1. Specific Search Route (MUST COME BEFORE /api/products/:id)
+app.get('/api/products/search', async (req, res) => {
+    try {
+        const searchQuery = req.query.q;
+        if (!searchQuery) {
+            return res.status(400).json({ message: 'Search query is required.' });
+        }
+
+        const products = await Product.find({
+            $or: [
+                { name: { $regex: searchQuery, $options: 'i' } },
+                { description: { $regex: searchQuery, $options: 'i' } },
+                { category: { $regex: searchQuery, $options: 'i' } }
+            ]
+        });
+        res.status(200).json(products);
+    } catch (error) {
+        console.error('Error during product search:', error);
+        res.status(500).json({ message: 'Server error during search.' });
+    }
+});
+
+// 2. Products by Category (Specific enough, can stay here)
 app.get('/api/products/category/:categoryName', async (req, res) => {
     try {
         const categoryName = req.params.categoryName;
@@ -35,6 +60,7 @@ app.get('/api/products/category/:categoryName', async (req, res) => {
     }
 });
 
+// 3. Product by ID (General, comes after more specific product routes)
 app.get('/api/products/:id', async (req, res) => {
     try {
         const productId = req.params.id;
@@ -49,6 +75,7 @@ app.get('/api/products/:id', async (req, res) => {
     }
 });
 
+// 4. Featured Products (Order doesn't strictly matter for this one relative to others)
 app.get('/api/featured_products', async (req, res) => {
     try {
         const featuredProducts = await Product.find({ isFeatured: true }).limit(5);
@@ -59,7 +86,8 @@ app.get('/api/featured_products', async (req, res) => {
     }
 });
 
-// --- User Authentication Routes Start ---
+// --- User Authentication Routes ---
+// ... (Your authentication routes remain unchanged) ...
 
 app.post('/api/signup', async (req, res) => {
     try {
@@ -116,15 +144,11 @@ app.post('/api/signin', async (req, res) => {
     }
 });
 
-// --- User Authentication Routes End ---
 
-// --- Cart Routes Start ---
+// --- Cart Routes ---
+// ... (Your cart routes remain unchanged) ...
 
-// A simple middleware to ensure userId is present for cart operations.
-// This version is more robust against undefined req.body, req.params, or req.query.
 const verifyUser = (req, res, next) => {
-    // Ensure req.body, req.params, req.query are treated as objects,
-    // even if they happen to be undefined initially.
     const body = req.body || {};
     const params = req.params || {};
     const query = req.query || {};
@@ -193,7 +217,7 @@ app.patch('/api/cart/:cartItemId', verifyUser, async (req, res) => {
         }
 
         if (cartItem.user.toString() !== userId) {
-             return res.status(403).json({ message: 'Unauthorized: You do not own this cart item.' });
+            return res.status(403).json({ message: 'Unauthorized: You do not own this cart item.' });
         }
 
         cartItem.quantity = quantity;
@@ -230,7 +254,6 @@ app.delete('/api/cart/:cartItemId', verifyUser, async (req, res) => {
     }
 });
 
-// --- Cart Routes End ---
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

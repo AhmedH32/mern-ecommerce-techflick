@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import FeaturedProducts from './FeaturedProducts';
+import SearchResultsPage from './SearchResultsPage';
 import Hero from './Hero';
 import NavBar from './NavBar';
 import Home from './Home';
@@ -28,6 +29,8 @@ function App() {
               <Route path='/signin' element={<SignIn></SignIn>} />
               <Route path='/signup' element={<SignUp></SignUp>} />
               <Route path='cart' element={<CartPage></CartPage>}></Route>
+              <Route path="/search" element={<SearchResultsPage />} />
+
             </Routes>
             <Footer></Footer>
 
