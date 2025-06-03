@@ -1,33 +1,25 @@
 // server/models/CartItem.js
 const mongoose = require('mongoose');
 
-const cartItemSchema = new mongoose.Schema({
-  userId: {
+const CartItemSchema = new mongoose.Schema({
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
-  productId: {
+  product: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Product',
     required: true,
-  },
-  category: {
-    type: String,
-    required: true,
-    trim: true,
   },
   quantity: {
     type: Number,
     required: true,
     min: 1,
   },
-}, {
-  timestamps: true
+  // IMPORTANT: Remove or comment out any 'category' field definition if it's here,
+  // especially if it's marked 'required: true'.
+  // category: { type: String, required: true }, // <-- REMOVE THIS LINE IF IT EXISTS
 });
 
-cartItemSchema.index({ userId: 1, productId: 1 }, { unique: true });
-
-const CartItem = mongoose.model('CartItem', cartItemSchema);
-
-module.exports = CartItem;
+module.exports = mongoose.model('CartItem', CartItemSchema);

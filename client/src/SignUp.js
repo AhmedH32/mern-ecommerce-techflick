@@ -20,19 +20,20 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/signup', { // Changed URL
+      const res = await fetch('http://localhost:5000/api/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password, name, email })
       });
 
-      if (res.ok) { // Check if response status is 2xx
-        setToastMsg('Account created successfully!');
+      const data = await res.json();
+
+      if (res.ok) {
+        setToastMsg(data.message || 'Account created successfully!');
         setShowToast(true);
         setTimeout(() => navigate('/signin', { state: { from } }), 800);
       } else {
-        const errorData = await res.json(); // Read error message from backend
-        setToastMsg(errorData.message || 'Sign up failed');
+        setToastMsg(data.message || 'Sign up failed');
         setShowToast(true);
       }
     } catch (error) {
@@ -48,7 +49,7 @@ const SignUp = () => {
 
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
-          <Form.Label>Full Name</Form.Label>
+          <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
             value={name}

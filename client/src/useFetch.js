@@ -9,6 +9,10 @@ const useFetch = (url) => {
     const fetchData = async () => {
       try {
         const response = await fetch(url);
+        if (!response.ok) { // Check for HTTP errors
+          const errorText = await response.text(); // Read as text in case it's not JSON
+          throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+        }
         const result = await response.json();
         setData(result);
       } catch (err) {

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from './context/AuthContext';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
+import { useAuth } from './context/AuthContext';
 
 const SignIn = () => {
-  const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { login } = useAuth();
   const from = location.state?.from?.pathname || '/';
 
   const [username, setUsername] = useState('');
@@ -21,11 +21,11 @@ const SignIn = () => {
     e.preventDefault();
     const result = await login({ username, password });
     if (result.success) {
-      setToastMsg('Signed in successfully!');
+      setToastMsg('Logged in successfully!');
       setShowToast(true);
       setTimeout(() => navigate(from, { replace: true }), 800);
     } else {
-      setToastMsg(result.message || 'Invalid credentials');
+      setToastMsg(result.message || 'Login failed!');
       setShowToast(true);
     }
   };
@@ -61,9 +61,9 @@ const SignIn = () => {
       </Form>
 
       <p className="text-center mt-2">
-        Don’t have an account?{' '}
+        Don't have an account?{' '}
         <Link to="/signup" state={{ from }}>
-          Sign up instead
+          Sign up
         </Link>
       </p>
 

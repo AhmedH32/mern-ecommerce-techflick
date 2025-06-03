@@ -1,72 +1,147 @@
 // src/context/CartContext.js
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import { useAuth } from './AuthContext';
 
-const CartContext = createContext(null);
+const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const { user } = useAuth();
   const [cartItems, setCartItems] = useState([]);
+  const [loadingCart, setLoadingCart] = useState(true);
+  const [errorCart, setErrorCart] = useState(null);
 
-  // Load this user's cart on sign‑in or when user changes
-  useEffect(() => {
-    if (!user) {
+  const BASE_URL = 'http://localhost:5000/api/cart';
+
+  const fetchCartItems = async (userId) => {
+    if (!userId) {
       setCartItems([]);
+      setLoadingCart(false);
       return;
     }
-    fetch(`http://localhost:8000/cart?userId=${user.id}`)
-      .then(res => res.json())
-      .then(setCartItems)
-      .catch(console.error);
-  }, [user]);
 
-  const addToCart = async (category, productId, quantity = 1) => {
-    if (!user) throw new Error('Not signed in');
-
-    // Check if already in cart
-    const existing = cartItems.find(
-      item => item.category === category && item.productId === productId
-    );
-
-    if (existing) {
-      // update quantity
-      const res = await fetch(`http://localhost:8000/cart/${existing.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ quantity: existing.quantity + quantity })
-      });
-      const updated = await res.json();
-      setCartItems(items =>
-        items.map(i => (i.id === updated.id ? updated : i))
-      );
-      return updated;
-    } else {
-      // create new
-      const res = await fetch(`http://localhost:8000/cart`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: user.id,
-          category,
-          productId,
-          quantity
-        })
-      });
-      const created = await res.json();
-      setCartItems(items => [...items, created]);
-      return created;
+    setLoadingCart(true);
+    setErrorCart(null);
+    try {
+      const response = await fetch(`${BASE_URL}/${userId}`);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to fetch cart items.');
+      }
+      const data = await response.json();
+      setCartItems(data);
+    } catch (error) {
+      console.error('Error fetching cart items:', error);
+      setErrorCart(error.message);
+      setCartItems([]);
+    } finally {
+      setLoadingCart(false);
     }
   };
 
-  const removeFromCart = async (cartId) => {
-    await fetch(`http://localhost:8000/cart/${cartId}`, {
-      method: 'DELETE'
-    });
-    setCartItems(items => items.filter(i => i.id !== cartId));
+  useEffect(() => {
+    if (user && user.id) {
+      fetchCartItems(user.id);
+    } else {
+      setCartItems([]);
+      setLoadingCart(false);
+    }
+  }, [user]);
+
+  // Modified addToCart: Removed 'category' as an argument and from the request body
+  const addToCart = async (productId, quantity = 1) => {
+    if (!user || !user.id) throw new Error('User not authenticated.');
+
+    try {
+      const response = await fetch(BASE_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // Only sending userId, productId, and quantity
+        body: JSON.stringify({ userId: user.id, productId, quantity }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to add item to cart.');
+      }
+
+      // Re-fetch cart items to ensure the state is up-to-date with the backend
+      await fetchCartItems(user.id);
+      return { success: true };
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      throw error;
+    }
+  };
+
+  const updateCartItemQuantity = async (cartItemId, newQuantity) => {
+    if (!user || !user.id) throw new Error('User not authenticated.');
+
+    try {
+      const response = await fetch(`${BASE_URL}/${cartItemId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId: user.id, quantity: newQuantity }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to update cart item quantity.');
+      }
+
+      await fetchCartItems(user.id);
+      return { success: true };
+    } catch (error) {
+      console.error('Error updating cart item quantity:', error);
+      throw error;
+    }
+  };
+
+  const removeCartItem = async (cartItemId) => {
+    if (!user || !user.id) throw new Error('User not authenticated.');
+
+    try {
+      const response = await fetch(`${BASE_URL}/${cartItemId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId: user.id }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to remove cart item.');
+      }
+
+      await fetchCartItems(user.id);
+      return { success: true };
+    } catch (error) {
+      console.error('Error removing cart item:', error);
+      throw error;
+    }
+  };
+
+  const getTotalPrice = () => {
+    return cartItems.reduce((total, item) => total + (item.product ? item.product.price * item.quantity : 0), 0);
+  };
+
+  const contextValue = {
+    cartItems,
+    loadingCart,
+    errorCart,
+    addToCart,
+    updateCartItemQuantity,
+    removeCartItem,
+    getTotalPrice,
+    fetchCartItems
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
+    <CartContext.Provider value={contextValue}>
       {children}
     </CartContext.Provider>
   );

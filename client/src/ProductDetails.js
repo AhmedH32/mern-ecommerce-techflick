@@ -1,9 +1,10 @@
+// src/components/ProductDetails.js
 import React, { useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import SpecsTable from './SpecsTable';
 import useFetch from './useFetch';
 import { useAuth } from './context/AuthContext';
-import { useCart } from './context/CartContext';      // ← import useCart
+import { useCart } from './context/CartContext';
 import { Toast, ToastContainer } from 'react-bootstrap';
 
 const ProductDetails = () => {
@@ -11,39 +12,37 @@ const ProductDetails = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
-  const { addToCart } = useCart();                     // ← get addToCart
+  const { addToCart } = useCart();
 
-  // Toast state
   const [showToast, setShowToast] = useState(false);
   const [toastMsg, setToastMsg] = useState('');
 
   const { data: product, loading, error } = useFetch(
-    `http://localhost:8000/${category}/${id}`
+    `http://localhost:5000/api/products/${id}`
   );
 
   if (loading) return <p>Loading…</p>;
-  if (error)   return <p className="text-danger">Error: {error}</p>;
+  if (error) return <p className="text-danger">Error: {error}</p>;
   if (!product) return <p>Product not found.</p>;
 
   const { name, price, currency, image, specifications: specs } = product;
 
   const handleAddToCart = async () => {
     if (!user) {
-      // send to sign-in
       navigate('/signin', { state: { from: location } });
       return;
     }
-
     try {
-      // call the real addToCart
-      await addToCart(category, Number(id), 1);
-      setToastMsg('Added to cart!');
-    } catch (err) {
-      console.error(err);
-      setToastMsg('Failed to add to cart');
+      // Modified: Only pass product._id (and quantity if needed, default is 1)
+      // The 'category' argument is no longer passed as it's not needed by CartContext's addToCart
+      await addToCart(product._id);
+      setToastMsg('Added to cart successfully!');
+    } catch (e) {
+      setToastMsg(`Failed to add to cart: ${e.message}`);
     }
     setShowToast(true);
   };
+
   return (
     <div className="container my-4">
       <div className="row g-4">
@@ -82,11 +81,12 @@ const ProductDetails = () => {
       </div>
     </div>
   );
-}
+};
+
 function formatKey(key) {
   return key
     .replace(/_/g, ' ')
     .replace(/\b\w/g, char => char.toUpperCase());
 }
 
-export default ProductDetails
+export default ProductDetails;
