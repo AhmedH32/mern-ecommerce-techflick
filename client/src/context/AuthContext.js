@@ -9,19 +9,29 @@ export function AuthProvider({ children }) {
     return stored ? JSON.parse(stored) : null;
   });
 
-  // login function: checks against json-server /users
+  // login function: checks against your Express backend /api/signin
   const login = async ({ username, password }) => {
-    const res = await fetch(
-      `http://localhost:8000/users?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
-    );
-    const data = await res.json();
-    if (data.length === 1) {
-      const [userObj] = data;
-      setUser(userObj);
-      localStorage.setItem('authUser', JSON.stringify(userObj));
-      return { success: true };
-    } else {
-      return { success: false, message: 'Invalid credentials' };
+    try {
+      const res = await fetch('http://localhost:5000/api/signin', { // Changed URL and method
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (res.ok) { // Check if response status is 2xx
+        const userObj = await res.json(); // Backend now sends the user object directly
+        setUser(userObj);
+        localStorage.setItem('authUser', JSON.stringify(userObj));
+        return { success: true };
+      } else {
+        const errorData = await res.json(); // Read error message from backend
+        return { success: false, message: errorData.message || 'Login failed' };
+      }
+    } catch (error) {
+      console.error('Login API call error:', error);
+      return { success: false, message: 'Network error or server unavailable' };
     }
   };
 
